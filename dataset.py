@@ -7,6 +7,11 @@ data = json.load(file)
 #print(data)
 
 df = pd.DataFrame(data)
-print(df)
+df['Data da Compra'] = pd.to_datetime(
+    df['Data da Compra'], 
+    format='%d/%m/%Y'
+    )
+
+print(df['Data da Compra'])
 
 file.close()
