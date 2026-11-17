@@ -1,4 +1,4 @@
-from graficos import grafico_map_estado, grafico_rec_mensal, grafico_rec_estado
+from graficos import grafico_map_estado, grafico_rec_mensal, grafico_rec_estado, grafico_rec_categoria
 
 import streamlit as st
 import plotly.express as px
@@ -25,6 +25,7 @@ with aba2:
     with coluna2:
         st.metric("Quantidade de Vendas", format_number(df.shape[0]))
         st.plotly_chart(grafico_rec_mensal, width='stretch')
+        st.plotly_chart(grafico_rec_categoria, width='stretch')
 
     receita_por_produto = df.groupby('Produto')['Preço'].sum().reset_index()
     fig = px.bar(receita_por_produto, x='Produto', y='Preço', title='Receita por produto')
