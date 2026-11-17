@@ -22,4 +22,13 @@ grafico_rec_mensal = px.line(
     line_dash = 'Ano',
     title = 'Receita Mensal'
 )
+
 grafico_rec_mensal.update_layout(yaxis_title = 'Receita')
+
+grafico_rec_estado = px.bar(
+    df_rec_estado.head(5), #.tail para os últimos
+    x = 'Local da compra',
+    y = 'Preço',
+    text_auto = True,
+    title = 'Top Receita por Estado'
+)
