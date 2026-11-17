@@ -1,4 +1,4 @@
-from graficos import grafico_map_estado, grafico_rec_mensal, grafico_rec_estado, grafico_rec_categoria
+from graficos import grafico_map_estado, grafico_rec_mensal, grafico_rec_estado, grafico_rec_categoria, grafico_rec_vendedor, grafico_rec_vendedor_count
 
 import streamlit as st
 import plotly.express as px
@@ -32,7 +32,10 @@ with aba2:
     st.plotly_chart(fig)
 
 with aba3:
-    st.subheader("Vendedores")
-    receita_por_vendedor = df.groupby('Vendedor')['Preço'].sum().reset_index()
-    fig = px.bar(receita_por_vendedor, x='Vendedor', y='Preço', title='Receita por vendedor')
-    st.plotly_chart(fig)
+    coluna1, coluna2 = st.columns(2)
+    with coluna1:
+        st.subheader("Vendedores")
+        st.plotly_chart(grafico_rec_vendedor, width='stretch')
+    with coluna2:
+        st.subheader("Vendedores")
+        st.plotly_chart(grafico_rec_vendedor_count, width='stretch')
