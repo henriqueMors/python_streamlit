@@ -12,6 +12,6 @@ df['Data da Compra'] = pd.to_datetime(
     format='%d/%m/%Y'
     )
 
-print(df['Data da Compra'])
+#print(df['Data da Compra'])
 
 file.close()
