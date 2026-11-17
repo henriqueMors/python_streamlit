@@ -18,10 +18,8 @@ grafico_rec_mensal = px.line(
     x = 'Mes',
     y = 'Preço',
     markers = True,
-    range_y = (0, df_rec_mensal['Preço'].max()),
     color = 'Ano',
     line_dash = 'Ano',
     title = 'Receita Mensal'
 )
-
 grafico_rec_mensal.update_layout(yaxis_title = 'Receita')
