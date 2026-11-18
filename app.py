@@ -9,6 +9,35 @@ from utils import format_number, df_rec_estado, df_rec_mensal, df_rec_categoria,
 st.set_page_config(layout="wide")
 st.title("Análise de Vendas :shopping_cart:")
 
+st.sidebar.title("Filtro de vendedores")
+filtro_vendedor = st.sidebar.multiselect(
+    "Selecione os vendedores", 
+    df_vendedores['Vendedor'].unique()
+)
+
+if filtro_vendedor:
+    df = df[df['Vendedor'].isin(filtro_vendedor)]
+    df_rec_estado = df.groupby('Local da compra')[['Preço']].sum()
+    df_rec_estado = (
+        df.drop_duplicates(subset='Local da compra')[['Local da compra', 'lat', 'lon']]
+        .merge(df_rec_estado, left_on='Local da compra', right_index=True)
+        .sort_values('Preço', ascending=False)
+    )
+    df_rec_mensal = (
+        df.set_index('Data da Compra')
+        .groupby(pd.Grouper(freq='ME'))['Preço']
+        .sum()
+        .reset_index()
+    )
+    df_rec_mensal['Ano'] = df_rec_mensal['Data da Compra'].dt.year
+    df_rec_mensal['Mes'] = df_rec_mensal['Data da Compra'].dt.month_name()
+    df_rec_categoria = (
+        df.groupby('Categoria do Produto')[['Preço']]
+        .sum()
+        .sort_values('Preço', ascending=False)
+    )
+    df_vendedores = pd.DataFrame(df.groupby('Vendedor')['Preço'].agg(['sum', 'count']))
+
 aba1, aba2, aba3 = st.tabs(["Dataset", "Receita", "Vendedores"])
 
 with aba1:
