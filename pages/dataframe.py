@@ -57,4 +57,18 @@ st.markdown("Escreva o nome do arquivo")
 coluna1, coluna2 = st.columns(2)
 
 with coluna1:
-    nome_arquivo = st.text_input("Nome do arquivo", "vendas_filtradas.csv")
+    nome_arquivo = st.text_input("",
+        label_visibility="collapsed",
+               
+    )
+
+    nome_arquivo += ".csv" if not nome_arquivo.endswith(".csv") else ""
+
+with coluna2:
+    st.download_button(
+        'Baixar arquivo',
+        data=convert_csv(df_filtrado),
+        file_name=nome_arquivo,
+        mime='text/csv',
+        on_click=mensagem_sucesso_download
+    )
