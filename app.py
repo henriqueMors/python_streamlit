@@ -2,6 +2,7 @@ from graficos import grafico_map_estado, grafico_rec_mensal, grafico_rec_estado,
 
 import streamlit as st
 import plotly.express as px
+import pandas as pd
 
 from dataset import df
 from utils import format_number, df_rec_estado, df_rec_mensal, df_rec_categoria, df_vendedores
@@ -12,7 +13,7 @@ st.title("Análise de Vendas :shopping_cart:")
 st.sidebar.title("Filtro de vendedores")
 filtro_vendedor = st.sidebar.multiselect(
     "Selecione os vendedores", 
-    df_vendedores['Vendedor'].unique()
+    df['Vendedor'].unique()
 )
 
 if filtro_vendedor:
