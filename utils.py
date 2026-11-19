@@ -1,6 +1,8 @@
 import pandas as pd
 
 from dataset import df
+import streamlit as st
+import time
 
 
 # Formata números grandes: 5871490 -> "R$ 5.87 milhões"
@@ -39,3 +41,14 @@ df_rec_categoria = (
 
 # 4 - Vendedores: receita (sum) e quantidade de vendas (count)
 df_vendedores = pd.DataFrame(df.groupby('Vendedor')['Preço'].agg(['sum', 'count']))
+
+# Função para converter arquivos CSV em DataFrame
+# Função para converter o DataFrame em arquivo CSV (para download)
+@st.cache_data
+def convert_csv(df):
+    return df.to_csv(index=False).encode('utf-8')
+
+def mensagem_sucesso_download():
+    success = st.success("Download concluído com sucesso!")
+    time.sleep(3)
+    success.empty()
