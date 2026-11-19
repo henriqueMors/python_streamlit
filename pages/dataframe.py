@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from dataset import df
 
 st.title("Dataset de Vendas :shopping_cart:")
@@ -34,4 +35,16 @@ with st.sidebar.expander("Data da Compra"):
         min_value=df['Data da Compra'].min(),
         max_value=df['Data da Compra'].max()
     )
-st.dataframe(df)
+
+filtro = (
+    (df['Categoria do Produto'].isin(categorias)) &
+    (df['Preço'].between(preco[0], preco[1])) &
+    (df['Data da Compra'].between(pd.to_datetime(data[0]), pd.to_datetime(data[1])))
+)
+
+df_filtrado = df[filtro]
+df_filtrado = df_filtrado[colunas]
+
+st.dataframe(df_filtrado)
+
+st.dataframe(df.loc[filtro])
